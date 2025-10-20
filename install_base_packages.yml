@@ -1,0 +1,29 @@
+- name: Installation des paquets de base
+  hosts: rpi5
+  become: true
+  tasks:
+    - name: Mettre à jour le cache APT
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Installer les paquets requis
+      ansible.builtin.apt:
+        package:
+          - mc
+          - xrdp
+          - git
+          - python3
+          - python3-pip
+          - python3-setuptools
+          - code
+        state: present
+        
+    - name: Désinstaller les paquets obsolètes
+      ansible.builtin.apt:
+        autoremove: true
+        purge: true
+        
+    - name: Nettoyage du cache
+      ansible.builtin.apt:
+        autoclean: true
+        clean: true
